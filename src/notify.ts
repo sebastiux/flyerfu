@@ -1,9 +1,38 @@
 import { Lead } from "./types";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
-// Remitente. Debe ser de un dominio verificado en Resend. Para pruebas puedes
-// usar el remitente de onboarding de Resend.
-const RESEND_FROM = process.env.RESEND_FROM || "EcoValue Leads <onboarding@resend.dev>";
+
+// Remitente por defecto (formato válido, remitente de pruebas de Resend).
+const DEFAULT_FROM = "EcoValue Leads <onboarding@resend.dev>";
+// Acepta "correo@dominio.com" o "Nombre <correo@dominio.com>".
+const FROM_RE =
+  /^(?:[^<>]+<\s*[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+\s*>|[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+)$/;
+
+/**
+ * Normaliza RESEND_FROM: quita comillas/espacios sobrantes (error común al
+ * configurarlo en un panel) y valida el formato. Si es inválido, usa el
+ * remitente por defecto y avisa, en vez de fallar con 422 en cada lead.
+ */
+function resolveFrom(): string {
+  const raw = process.env.RESEND_FROM;
+  if (!raw || !raw.trim()) return DEFAULT_FROM;
+  let v = raw.trim();
+  const first = v.charAt(0);
+  const last = v.charAt(v.length - 1);
+  if (v.length >= 2 && ((first === '"' && last === '"') || (first === "'" && last === "'"))) {
+    v = v.slice(1, -1).trim();
+  }
+  if (!FROM_RE.test(v)) {
+    console.error(
+      `[resend] RESEND_FROM inválido (${JSON.stringify(raw)}). ` +
+        `Usa el formato "Nombre <correo@dominio.com>". Usando por defecto: ${DEFAULT_FROM}`
+    );
+    return DEFAULT_FROM;
+  }
+  return v;
+}
+
+const RESEND_FROM = resolveFrom();
 // Destinatarios: uno o varios correos separados por coma.
 const LEAD_NOTIFY_TO = (process.env.LEAD_NOTIFY_TO || "")
   .split(",")
