@@ -18,6 +18,7 @@
 
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font);
@@ -25,6 +26,7 @@ body {
   background: var(--bg);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;             /* sin scroll horizontal en móvil */
 }
 
 /* ---------- Barra de marca ---------- */
@@ -67,12 +69,31 @@ body {
 }
 
 /* ---------- Layout ---------- */
-.page { max-width: 1080px; margin: 0 auto; padding: 40px 20px 32px; }
-.grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 44px;
-  align-items: start;
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 20px 32px;
+  /* Respeta los bordes seguros en teléfonos con notch. */
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+/* Móvil: una columna, orden gancho -> formulario -> detalles. */
+.grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
+
+/* Escritorio: dos columnas; el formulario ocupa la derecha en ambas filas. */
+@media (min-width: 861px) {
+  .grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-areas:
+      "hook    form"
+      "details form";
+    column-gap: 44px;
+    row-gap: 28px;
+    align-items: start;
+  }
+  .hook { grid-area: hook; }
+  .form-card { grid-area: form; }
+  .details { grid-area: details; }
 }
 
 /* ---------- Propuesta (izquierda) ---------- */
@@ -87,7 +108,7 @@ body {
   padding: 6px 12px;
   border-radius: 999px;
 }
-.pitch h1 {
+.hook h1 {
   font-size: 2.5rem;
   line-height: 1.1;
   letter-spacing: -.02em;
@@ -95,10 +116,10 @@ body {
   color: var(--forest);
   font-weight: 800;
 }
-.pitch .hl { color: var(--lime); }
-.lead { color: var(--slate); font-size: 1.08rem; max-width: 46ch; margin: 0 0 28px; }
+.hook .hl { color: var(--lime); }
+.lead { color: var(--slate); font-size: 1.08rem; max-width: 46ch; margin: 0; }
 
-.benefits { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 14px; }
+.benefits { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 14px; }
 .benefits li { display: flex; gap: 12px; align-items: flex-start; }
 .benefits svg {
   flex: 0 0 auto;
@@ -144,14 +165,24 @@ label { display: block; font-weight: 600; font-size: .86rem; margin-bottom: 6px;
 
 input, select {
   width: 100%;
-  padding: 12px 14px;
-  font-size: 1rem;
+  padding: 13px 14px;
+  min-height: 48px;               /* objetivo táctil cómodo */
+  font-size: 16px;                /* evita el zoom automático en iOS */
   color: var(--ink);
   background: #fbfdfa;
   border: 1.5px solid var(--line);
   border-radius: 10px;
   transition: border-color .15s, box-shadow .15s;
   font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+select {
+  /* Restaura la flecha del select tras quitar la apariencia nativa. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%2355655c' stroke-width='1.6' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
 }
 input:focus, select:focus {
   outline: none;
@@ -197,7 +228,7 @@ input.invalid, select.invalid { border-color: var(--danger); }
 .reassure { text-align: center; color: var(--slate); font-size: .82rem; margin: 12px 0 0; }
 
 /* ---------- Éxito ---------- */
-.success { text-align: center; padding: 20px 6px; }
+.success { text-align: center; padding: 20px 6px; scroll-margin-top: 80px; }
 .success .check {
   width: 60px; height: 60px; margin: 0 auto 14px;
   border-radius: 50%;
@@ -213,13 +244,20 @@ input.invalid, select.invalid { border-color: var(--danger); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
-  .grid { grid-template-columns: 1fr; gap: 32px; }
-  .pitch h1 { font-size: 2.05rem; }
-  .page { padding-top: 28px; }
+  .hook h1 { font-size: 2.05rem; }
+  .page { padding-top: 24px; padding-bottom: 24px; }
+  .grid { gap: 24px; }
+  /* En móvil el formulario es lo principal: reducimos el aire del gancho. */
+  .hook h1 { margin: 12px 0 10px; }
+  .form-card { padding: 22px 18px 20px; }
 }
 @media (max-width: 440px) {
   .row { grid-template-columns: 1fr; }
-  .pitch h1 { font-size: 1.75rem; }
+  .hook h1 { font-size: 1.7rem; }
   .topbar-tag { display: none; }
+  .topbar-inner { padding: 10px 16px; }
   .lead { font-size: 1rem; }
+  .btn { padding: 16px; font-size: 1.05rem; }   /* CTA amplio y fácil de tocar */
+  .eyebrow { font-size: .7rem; }
+  .trust-item strong { font-size: 1.3rem; }
 }
