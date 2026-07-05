@@ -21,6 +21,8 @@ sus datos ya escritos. Construida con **Node.js + TypeScript + Express**.
 - **Atribución de campaña**: captura `utm_source`, `utm_campaign` y `fbclid`
   desde la URL para saber qué anuncio generó cada lead.
 - **Anti-spam**: honeypot + rate limiting básico.
+- **Notificación por correo con Resend**: cada lead dispara un email (con los
+  datos y un botón para responder por WhatsApp) a los correos de `LEAD_NOTIFY_TO`.
 - **Reenvío opcional a webhook** (CRM, Zapier, Make, Google Sheets…).
 - **Meta Pixel**: dispara el evento `Lead` automáticamente si el píxel está en la página.
 

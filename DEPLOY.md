@@ -34,9 +34,30 @@ En el servicio, ve a la pestaña **Variables** y agrega:
 | `ADMIN_TOKEN`     | *(una contraseña larga)*       | Para consultar/exportar los leads.           |
 | `DATA_DIR`        | `/app/data`                    | Carpeta de datos (ver paso 4).               |
 | `ALLOWED_ORIGINS` | `*`                            | Orígenes CORS (déjalo en `*` si tienes dudas).|
+| `RESEND_API_KEY`  | `re_...`                       | Notificación por correo (ver paso 3.1).      |
+| `LEAD_NOTIFY_TO`  | `ventas@ecovalue.mx`           | Correos que reciben los leads (coma para varios).|
+| `RESEND_FROM`     | `EcoValue Leads <no-reply@tudominio.com>` | Remitente verificado en Resend.  |
 
 > **No** necesitas definir `PORT`: Railway lo asigna solo y el servidor ya lo
 > respeta.
+
+### 3.1. Notificaciones por correo con Resend
+
+Cada vez que alguien llena el formulario, además del WhatsApp se envía un
+correo con los datos del lead a las direcciones de `LEAD_NOTIFY_TO`.
+
+1. Crea una cuenta en <https://resend.com> (tiene plan gratis).
+2. **API Keys → Create API Key** → copia la clave (`re_...`) en `RESEND_API_KEY`.
+3. En `LEAD_NOTIFY_TO` pon los correos que deben recibir los leads (separados
+   por coma para varios, ej. `ventas@ecovalue.mx,gerencia@ecovalue.mx`).
+4. **Remitente (`RESEND_FROM`):**
+   - Para **producción**: en Resend ve a **Domains**, agrega y verifica tu
+     dominio (`ecovalue.mx`), y usa algo como `EcoValue <no-reply@ecovalue.mx>`.
+   - Para **probar rápido**: puedes dejar `RESEND_FROM` sin definir; se usa el
+     remitente de pruebas de Resend (`onboarding@resend.dev`).
+
+Si dejas `RESEND_API_KEY` vacío, el envío por correo simplemente se desactiva
+(el resto sigue funcionando igual).
 
 ## 4. (Recomendado) Agrega un volumen para no perder los leads
 
