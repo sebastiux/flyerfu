@@ -5,6 +5,7 @@ import path from "path";
 import { Lead } from "./types";
 import { validateLead } from "./validate";
 import { exportCsv, readLeads, saveLead } from "./store";
+import { emailEnabled, sendLeadEmail } from "./notify";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -116,8 +117,9 @@ app.post("/api/leads", rateLimit, async (req: Request, res: Response) => {
     return;
   }
 
-  // Fire-and-forget forwarding; the prospect shouldn't wait on the CRM.
+  // Fire-and-forget notifications; the prospect shouldn't wait on them.
   void forwardToWebhook(lead);
+  void sendLeadEmail(lead);
 
   console.log(`[leads] captured ${lead.id} — ${lead.name} (${lead.phone})`);
   res.status(201).json({ ok: true, id: lead.id });
@@ -163,4 +165,9 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.listen(PORT, () => {
   console.log(`EcoValue lead capturer running at http://localhost:${PORT}`);
   if (!ADMIN_TOKEN) console.log("[warn] ADMIN_TOKEN not set — admin endpoints are disabled.");
+  console.log(
+    emailEnabled()
+      ? "[resend] email notifications enabled."
+      : "[resend] email notifications disabled (set RESEND_API_KEY + LEAD_NOTIFY_TO)."
+  );
 });
