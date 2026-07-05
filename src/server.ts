@@ -14,6 +14,9 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "*")
   .filter(Boolean);
 const LEAD_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || "";
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "";
+// WhatsApp destino: solo dígitos, formato internacional (país + número).
+// Default: +52 1 55 1059 7019 -> 5215510597019
+const WHATSAPP_NUMBER = (process.env.WHATSAPP_NUMBER || "5215510597019").replace(/\D/g, "");
 
 app.disable("x-powered-by");
 app.use(express.json({ limit: "64kb" }));
@@ -145,6 +148,11 @@ app.get("/api/leads.csv", requireAdmin, async (_req: Request, res: Response) => 
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader("Content-Disposition", 'attachment; filename="leads.csv"');
   res.send(csv);
+});
+
+// Public config consumed by the front-end (e.g. the WhatsApp destination).
+app.get("/api/config", (_req: Request, res: Response) => {
+  res.json({ whatsappNumber: WHATSAPP_NUMBER });
 });
 
 app.get("/health", (_req: Request, res: Response) => res.json({ ok: true }));
