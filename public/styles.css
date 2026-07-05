@@ -46,11 +46,11 @@ body {
   justify-content: space-between;
   gap: 16px;
 }
-.logo-slot { display: flex; align-items: center; min-width: 140px; min-height: 48px; }
-.logo { max-height: 48px; width: auto; display: block; }
+.logo-slot { display: flex; align-items: center; min-width: 140px; min-height: 64px; }
+.logo { max-height: 64px; width: auto; display: block; }
 .logo-placeholder {
   min-width: 150px;
-  height: 48px;
+  height: 64px;
   border: 1.5px dashed var(--lime);
   border-radius: 8px;
   display: flex;
