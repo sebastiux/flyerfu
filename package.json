@@ -1,0 +1,32 @@
+{
+  "name": "flyerfu",
+  "version": "1.0.0",
+  "description": "EcoValue solar panel lead capture landing page for Facebook ads",
+  "main": "dist/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "leads",
+    "solar",
+    "ecovalue",
+    "facebook-ads"
+  ],
+  "author": "EcoValue",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4a9b2e" />
+  <title>Paneles Solares EcoValue · Cotiza tu ahorro</title>
+  <meta name="description" content="Reduce hasta 95% tu recibo de luz con paneles solares EcoValue. Cotización gratis y sin compromiso." />
+
+  <!-- Open Graph: how the link previews when shared on Facebook -->
+  <meta property="og:title" content="Paneles Solares EcoValue · Ahorra en tu recibo de luz" />
+  <meta property="og:description" content="Cotización gratis y sin compromiso. Ahorro y cuidado ambiental." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <!-- ============================================================= -->
+      <!--  LOGO: replace /assets/logo.png with your EcoValue logo file.  -->
+      <!--  Recommended: transparent PNG, ~480px wide. The box below     -->
+      <!--  keeps its space so the layout never jumps.                    -->
+      <!-- ============================================================= -->
+      <header class="brand">
+        <div class="logo-slot">
+          <img
+            src="/assets/logo.png"
+            alt="EcoValue — Ahorro y Cuidado Ambiental"
+            class="logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div class="logo-placeholder" style="display:none;">
+            <span>Coloca aquí<br />el logo de EcoValue</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="hero">
+        <h1>Baja hasta <span class="hl">95%</span> tu recibo de luz</h1>
+        <p class="lead">
+          Instalamos paneles solares para tu casa o negocio.
+          Recibe una <strong>cotización gratis</strong> y sin compromiso.
+        </p>
+        <ul class="benefits">
+          <li>Sin enganche en planes de financiamiento</li>
+          <li>Instalación profesional certificada</li>
+          <li>Ahorro garantizado desde el primer mes</li>
+        </ul>
+      </div>
+
+      <!-- ===================== LEAD CAPTURE FORM ===================== -->
+      <form id="leadForm" class="form" novalidate>
+        <h2>Cotiza tu ahorro</h2>
+
+        <div class="field">
+          <label for="name">Nombre completo *</label>
+          <input id="name" name="name" type="text" autocomplete="name"
+                 placeholder="Ej. María González" required />
+          <small class="error" data-error="name"></small>
+        </div>
+
+        <div class="field">
+          <label for="phone">Teléfono (WhatsApp) *</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                 placeholder="10 dígitos" required />
+          <small class="error" data-error="phone"></small>
+        </div>
+
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" autocomplete="email"
+                 placeholder="tu@correo.com" />
+          <small class="error" data-error="email"></small>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="propertyType">Tipo de inmueble</label>
+            <select id="propertyType" name="propertyType">
+              <option value="">Selecciona…</option>
+              <option value="casa">Casa</option>
+              <option value="negocio">Negocio / Comercio</option>
+              <option value="industria">Industria</option>
+              <option value="campo">Campo / Agrícola</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="monthlyBill">Recibo mensual (MXN)</label>
+            <select id="monthlyBill" name="monthlyBill">
+              <option value="">Selecciona…</option>
+              <option value="0-1000">Menos de $1,000</option>
+              <option value="1000-3000">$1,000 – $3,000</option>
+              <option value="3000-6000">$3,000 – $6,000</option>
+              <option value="6000+">Más de $6,000</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="state">Estado / Ciudad</label>
+          <input id="state" name="state" type="text" autocomplete="address-level1"
+                 placeholder="Ej. Jalisco, Guadalajara" />
+        </div>
+
+        <div class="field">
+          <label for="message">¿Algo que debamos saber? (opcional)</label>
+          <textarea id="message" name="message" rows="2"
+                    placeholder="Horarios de contacto, dudas, etc."></textarea>
+        </div>
+
+        <!-- Honeypot: hidden from humans, catches bots. Do not remove. -->
+        <div class="hp" aria-hidden="true">
+          <label for="company">Empresa</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="consent" name="consent" />
+          <span>Autorizo a EcoValue a contactarme sobre esta cotización.
+            <a href="/privacy.html" target="_blank" rel="noopener">Aviso de privacidad</a>.</span>
+        </label>
+        <small class="error" data-error="consent"></small>
+
+        <button type="submit" class="btn" id="submitBtn">
+          Quiero mi cotización gratis
+        </button>
+
+        <p class="reassure">🔒 Tus datos están seguros. Sin spam.</p>
+      </form>
+
+      <!-- Success panel, shown after a successful submission -->
+      <div id="success" class="success" hidden>
+        <div class="check">✓</div>
+        <h2>¡Gracias! 🎉</h2>
+        <p>Recibimos tus datos. Un asesor de EcoValue te contactará muy pronto
+          para darte tu cotización personalizada.</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>EcoValue · Ahorro y Cuidado Ambiental</p>
+    </footer>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
