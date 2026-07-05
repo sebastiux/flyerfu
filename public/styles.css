@@ -46,11 +46,11 @@ body {
   justify-content: space-between;
   gap: 16px;
 }
-.logo-slot { display: flex; align-items: center; min-width: 140px; min-height: 88px; }
-.logo { max-height: 88px; width: auto; display: block; }
+.logo-slot { display: flex; align-items: center; min-width: 140px; min-height: 120px; }
+.logo { max-height: 120px; width: auto; display: block; }
 .logo-placeholder {
   min-width: 150px;
-  height: 88px;
+  height: 120px;
   border: 1.5px dashed var(--lime);
   border-radius: 8px;
   display: flex;
@@ -264,8 +264,8 @@ input.invalid, select.invalid { border-color: var(--danger); }
   .hook h1 { font-size: 1.7rem; }
   .topbar-tag { display: none; }
   .topbar-inner { padding: 10px 16px; }
-  .logo-slot { min-height: 64px; }
-  .logo { max-height: 64px; }         /* algo más chico en teléfonos pequeños */
+  .logo-slot { min-height: 84px; }
+  .logo { max-height: 84px; }         /* algo más chico en teléfonos pequeños */
   .lead { font-size: 1rem; }
   .btn { padding: 16px; font-size: 1.05rem; }   /* CTA amplio y fácil de tocar */
   .eyebrow { font-size: .7rem; }
