@@ -43,7 +43,7 @@
   // Construye el mensaje de WhatsApp con todos los datos del prospecto.
   function buildWhatsappUrl(data) {
     var lines = [
-      "Hola EcoValue 👋, solicito una cotización de paneles solares.",
+      "Hola EcoValue 👋, solicito una cotización de un sistema de paneles solares.",
       "",
       "*Nombre:* " + data.name,
       "*Teléfono:* " + data.phone,
