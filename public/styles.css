@@ -163,7 +163,8 @@ body {
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 label { display: block; font-weight: 600; font-size: .86rem; margin-bottom: 6px; color: var(--ink); }
 
-input, select {
+/* Nota: excluimos checkbox/radio para no quitarles su apariencia nativa. */
+input:not([type="checkbox"]):not([type="radio"]), select {
   width: 100%;
   padding: 13px 14px;
   min-height: 48px;               /* objetivo táctil cómodo */
@@ -184,7 +185,7 @@ select {
   background-position: right 14px center;
   padding-right: 38px;
 }
-input:focus, select:focus {
+input:not([type="checkbox"]):focus, select:focus {
   outline: none;
   border-color: var(--green);
   box-shadow: 0 0 0 3px rgba(47,158,68,.14);
@@ -194,8 +195,15 @@ input.invalid, select.invalid { border-color: var(--danger); }
 
 .error { display: block; color: var(--danger); font-size: .8rem; margin-top: 4px; min-height: 1em; }
 
-.consent { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; font-size: .88rem; color: var(--slate); margin: 4px 0 2px; }
-.consent input { width: auto; margin-top: 3px; flex: 0 0 auto; }
+.consent { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; font-size: .88rem; color: var(--slate); margin: 4px 0 2px; cursor: pointer; }
+.consent input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+  accent-color: var(--green);     /* palomita en verde de marca */
+  cursor: pointer;
+}
 .consent a { color: var(--forest); }
 
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
