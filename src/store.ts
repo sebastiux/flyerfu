@@ -2,7 +2,11 @@ import { promises as fs } from "fs";
 import path from "path";
 import { Lead } from "./types";
 
-const DATA_DIR = path.join(__dirname, "..", "data");
+// Configurable para apuntar a un volumen persistente en producción
+// (p. ej. DATA_DIR=/app/data en Railway). Por defecto: ./data del proyecto.
+const DATA_DIR = process.env.DATA_DIR
+  ? path.resolve(process.env.DATA_DIR)
+  : path.join(__dirname, "..", "data");
 const JSON_PATH = path.join(DATA_DIR, "leads.json");
 const CSV_PATH = path.join(DATA_DIR, "leads.csv");
 
